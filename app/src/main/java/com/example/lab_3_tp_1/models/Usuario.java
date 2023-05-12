@@ -1,6 +1,8 @@
 package com.example.lab_3_tp_1.models;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private String nombre;
     private String apellido;
     private long dni;

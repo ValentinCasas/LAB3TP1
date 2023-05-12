@@ -12,13 +12,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.lab_3_tp_1.models.Usuario;
+import com.example.lab_3_tp_1.ui.registro.MainActivity;
 import com.example.lab_3_tp_1.ui.request.ApiClient;
 
 public class LoginActivityViewModel extends AndroidViewModel {
 
     private Context context;
     private ApiClient apiClient;
-    private MutableLiveData<Boolean> loginSuccess;
     private MutableLiveData<Usuario> dataUsuarioMutable;
 
     public LoginActivityViewModel(@NonNull Application application) {
@@ -27,10 +27,6 @@ public class LoginActivityViewModel extends AndroidViewModel {
         apiClient = new ApiClient();
     }
 
-    public LiveData<Boolean> getLoginSuccess() {
-        loginSuccess = new MutableLiveData<>();
-        return loginSuccess;
-    }
     public LiveData<Usuario> getDataUsuarioMutable() {
         if (dataUsuarioMutable == null) {
             dataUsuarioMutable = new MutableLiveData<>();
@@ -38,23 +34,12 @@ public class LoginActivityViewModel extends AndroidViewModel {
         return dataUsuarioMutable;
     }
 
-
     public void confirmarLogin(String mail, String clave) {
-        Usuario usuario = apiClient.login(context,mail,clave);
-
-        loginSuccess.setValue(usuario != null ? true : false);
-    }
-
-    public void leerDatos() {
-        Usuario usuario = apiClient.leer(context);
-        if(usuario != null){
+        Usuario usuario = apiClient.login(context ,mail, clave);
+        if (usuario != null) {
             dataUsuarioMutable.setValue(usuario);
-        }else{
-            Toast.makeText(context, "Credenciales erroneas", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplication(), "Credenciales invalidas", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 }
-

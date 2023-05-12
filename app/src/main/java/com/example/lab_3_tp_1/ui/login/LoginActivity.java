@@ -25,6 +25,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         mv = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginActivityViewModel.class);
 
+        mv.getDataUsuarioMutable().observe(this, new Observer<Usuario>() {
+            @Override
+            public void onChanged(Usuario usuario) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("usuario", usuario);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         binding.btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,19 +49,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        mv.getLoginSuccess().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean loginSuccess) {
-                if (loginSuccess) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
+
     }
 }
-
-
 
 

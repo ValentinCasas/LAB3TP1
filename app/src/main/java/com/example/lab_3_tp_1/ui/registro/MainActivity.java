@@ -26,20 +26,15 @@ public class MainActivity extends AppCompatActivity {
         loginViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(LoginActivityViewModel.class);
 
 
-        loginViewModel.getDataUsuarioMutable().observe(this, new Observer<Usuario>() {
-            @Override
-            public void onChanged(Usuario usuario) {
+        Usuario usuario = (Usuario) getIntent().getSerializableExtra("usuario");
+        if (usuario != null) {
+            binding.etNombre.setText(usuario.getNombre());
+            binding.etApellido.setText(usuario.getApellido());
+            binding.etDni.setText(String.valueOf(usuario.getDni()));
+            binding.etMail.setText(usuario.getMail());
+            binding.etClave.setText(usuario.getClave());
+        }
 
-                binding.etNombre.setText(usuario.getNombre());
-                binding.etApellido.setText(usuario.getApellido());
-                binding.etDni.setText(String.valueOf(usuario.getDni()));
-                binding.etMail.setText(usuario.getMail());
-                binding.etClave.setText(usuario.getClave());
-
-            }
-        });
-
-        loginViewModel.leerDatos();
         binding.btnRegistrar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
